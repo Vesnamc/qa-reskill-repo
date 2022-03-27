@@ -1,1 +1,4 @@
 .idea/*
+#Config file
+Week2Project/src/test/resources/env.properties
+*.class
