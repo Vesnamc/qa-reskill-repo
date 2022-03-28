@@ -8,10 +8,10 @@ public class CrocodileAsserts {
 
     public SoftAssert softAssert = new SoftAssert();
 
-    public void assertCreateNewCrocodile(CreateCrocodileResponse createCrocodileResponse, CreateCrocodileRequest createCrocodileRequest) {
-        softAssert.assertEquals(createCrocodileResponse.getName(), createCrocodileRequest.getName(), "Name didn't match");
-        softAssert.assertEquals(createCrocodileResponse.getDateOfBirth(), createCrocodileRequest.getDateOfBirth(), "Date of birth didn't match");
-        softAssert.assertEquals(createCrocodileResponse.getSex(), createCrocodileRequest.getSex(), "Sex didn't match");
+    public void assertCreateNewCrocodile(CommonCrocodileResponse commonCrocodileResponse, CommonCrocodileRequest commonCrocodileRequest) {
+        softAssert.assertEquals(commonCrocodileResponse.getName(), commonCrocodileRequest.getName(), "Name didn't match");
+        softAssert.assertEquals(commonCrocodileResponse.getDateOfBirth(), commonCrocodileRequest.getDateOfBirth(), "Date of birth didn't match");
+        softAssert.assertEquals(commonCrocodileResponse.getSex(), commonCrocodileRequest.getSex(), "Sex didn't match");
         softAssert.assertAll();
     }
 
@@ -39,7 +39,7 @@ public class CrocodileAsserts {
         softAssert.assertAll();
     }
 
-    public void assertOneOfMyCrocodiles(GetOneOfMyCrocodilesResponse getOneOfMyCrocodilesResponse) {
+    public void assertOneOfMyCrocodiles(CommonCrocodileResponse getOneOfMyCrocodilesResponse) {
 
         softAssert.assertFalse(getOneOfMyCrocodilesResponse.getName().isEmpty(), "Name is not empty");
         softAssert.assertFalse(getOneOfMyCrocodilesResponse.getDateOfBirth().isEmpty(), "Date of birth didn't match");

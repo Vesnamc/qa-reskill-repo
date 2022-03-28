@@ -4,12 +4,9 @@ import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CreateCrocodileResponse implements Serializable
+public class CommonCrocodileRequest implements Serializable
 {
 
-    @SerializedName("id")
-    @Expose
-    private Integer id;
     @SerializedName("name")
     @Expose
     private String name;
@@ -19,29 +16,16 @@ public class CreateCrocodileResponse implements Serializable
     @SerializedName("date_of_birth")
     @Expose
     private String dateOfBirth;
-    @SerializedName("age")
-    @Expose
-    private Integer age;
-    private final static long serialVersionUID = 7838727261731306498L;
+    private final static long serialVersionUID = -976650914674967403L;
 
-    public CreateCrocodileResponse() {
+    public CommonCrocodileRequest() {
     }
 
-    public CreateCrocodileResponse(Integer id, String name, String sex, String dateOfBirth, Integer age) {
+    public CommonCrocodileRequest(String name, String sex, String dateOfBirth) {
         super();
-        this.id = id;
         this.name = name;
         this.sex = sex;
         this.dateOfBirth = dateOfBirth;
-        this.age = age;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -66,14 +50,6 @@ public class CreateCrocodileResponse implements Serializable
 
     public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
     }
 
 }
