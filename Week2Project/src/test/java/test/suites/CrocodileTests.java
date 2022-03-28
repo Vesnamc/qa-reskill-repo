@@ -2,13 +2,24 @@ package test.suites;
 
 import calls.CrocodilesAPI;
 import data.models.*;
+import data.provider.CrocodileProvider;
 import jdk.jfr.Description;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import test.asserts.CrocodileAsserts;
 import test.common.TestBase;
 
 public class CrocodileTests extends TestBase {
+
+    CommonCrocodileRequest commonCrocodileRequest;
+    int idOfCreatedCrocodile;
+
+    @BeforeMethod
+    public void prepareTestData(){
+        commonCrocodileRequest = CrocodileProvider.prepareCrocodile();
+        idOfCreatedCrocodile = CrocodilesAPI.createNewCrocodile(accessToken, commonCrocodileRequest).getId();
+    }
 
     public CrocodileAsserts crocodileAsserts = new CrocodileAsserts();
 
@@ -20,11 +31,10 @@ public class CrocodileTests extends TestBase {
     @Test
     @Description("verify crocodile is created")
     public void createCrocodileTest() {
-        CreateCrocodileRequest createCrocodileRequest = new CreateCrocodileRequest("Ana", "F", "2005-05-05");
 
-        CreateCrocodileResponse createCrocodileResponse = CrocodilesAPI.createNewCrocodile(accessToken, createCrocodileRequest);
+        CommonCrocodileResponse commonCrocodileResponse = CrocodilesAPI.createNewCrocodile(accessToken, commonCrocodileRequest);
 
-        crocodileAsserts.assertCreateNewCrocodile(createCrocodileResponse, createCrocodileRequest);
+        crocodileAsserts.assertCreateNewCrocodile(commonCrocodileResponse, commonCrocodileRequest);
 
     }
 
@@ -57,7 +67,7 @@ public class CrocodileTests extends TestBase {
     public void getOneOfMyCrocodiles() {
         String firstId = getFirstID();
 
-        GetOneOfMyCrocodilesResponse getOneOfMyCrocodilesResponse = CrocodilesAPI.getOneOfMyCrocodilesResponse(firstId, accessToken);
+        CommonCrocodileResponse getOneOfMyCrocodilesResponse = CrocodilesAPI.getOneOfMyCrocodilesResponse(firstId, accessToken);
         crocodileAsserts.assertOneOfMyCrocodiles(getOneOfMyCrocodilesResponse);
     }
 
