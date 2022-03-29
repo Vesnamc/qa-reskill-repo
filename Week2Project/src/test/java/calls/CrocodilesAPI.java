@@ -13,14 +13,6 @@ public class CrocodilesAPI {
     }
 
     public static CommonCrocodileResponse createNewCrocodile(String accessToken, CommonCrocodileRequest commonCrocodileRequest) {
-        /*
-        String json = "{"+
-        "\"name\": \"" + commonCrocodileRequest.getName()+ "\"," +
-        "\"sex\": \"" + commonCrocodileRequest.getSex() + "\"," +
-        "\"date_of_birth\": \"" + commonCrocodileRequest.getDateOfBirth()+ "\""
-                +"}";
-        Response post = RestAssuredFunctions.post(ApiEndpoints.MY_CROCODILES, accessToken, json);
-        */
         Response post = RestAssuredFunctions.post(ApiEndpoints.MY_CROCODILES, accessToken, commonCrocodileRequest);
         return GsonFunctions.parseSuccessResponseToModel(post, CommonCrocodileResponse.class);
     }

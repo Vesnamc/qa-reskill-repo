@@ -8,10 +8,10 @@ public class CrocodileAsserts {
 
     public SoftAssert softAssert = new SoftAssert();
 
-    public void assertCreateNewCrocodile(CommonCrocodileResponse commonCrocodileResponse, CommonCrocodileRequest commonCrocodileRequest) {
-        softAssert.assertEquals(commonCrocodileResponse.getName(), commonCrocodileRequest.getName(), "Name didn't match");
-        softAssert.assertEquals(commonCrocodileResponse.getDateOfBirth(), commonCrocodileRequest.getDateOfBirth(), "Date of birth didn't match");
-        softAssert.assertEquals(commonCrocodileResponse.getSex(), commonCrocodileRequest.getSex(), "Sex didn't match");
+    public void assertCreateNewCrocodile(CommonCrocodileResponse response, CommonCrocodileRequest request) {
+        softAssert.assertEquals(response.getName(), request.getName(), "Name didn't match");
+        softAssert.assertEquals(response.getDateOfBirth(), request.getDateOfBirth(), "Date of birth didn't match");
+        softAssert.assertEquals(response.getSex(), request.getSex(), "Sex didn't match");
         softAssert.assertAll();
     }
 
