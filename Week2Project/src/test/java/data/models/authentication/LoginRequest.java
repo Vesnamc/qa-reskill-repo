@@ -1,4 +1,4 @@
-package data.models;
+package data.models.authentication;
 
 import java.io.Serializable;
 import com.google.gson.annotations.Expose;

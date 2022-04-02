@@ -4,7 +4,7 @@ import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CommonCrocodileResponse implements Serializable
+public class CrocodileResponse implements Serializable
 {
 
     @SerializedName("id")
@@ -24,10 +24,10 @@ public class CommonCrocodileResponse implements Serializable
     private Integer age;
     private final static long serialVersionUID = 7838727261731306498L;
 
-    public CommonCrocodileResponse() {
+    public CrocodileResponse() {
     }
 
-    public CommonCrocodileResponse(Integer id, String name, String sex, String dateOfBirth, Integer age) {
+    public CrocodileResponse(Integer id, String name, String sex, String dateOfBirth, Integer age) {
         super();
         this.id = id;
         this.name = name;

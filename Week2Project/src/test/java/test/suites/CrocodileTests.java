@@ -16,16 +16,28 @@ import static data.provider.CrocodileProvider.DF;
 
 public class CrocodileTests extends TestBase {
 
-    CommonCrocodileRequest commonCrocodileRequest;
-    int idOfCreatedCrocodile;
+    private CrocodileRequest commonCrocodileRequest;
+    private int idOfCreatedCrocodile;
+
+    public CrocodileAsserts crocodileAsserts = new CrocodileAsserts();
 
     @BeforeMethod
     public void prepareTestData(){
         commonCrocodileRequest = CrocodileProvider.prepareCrocodile();
-        //idOfCreatedCrocodile = CrocodilesAPI.createNewCrocodile(accessToken, commonCrocodileRequest).getId();
+        idOfCreatedCrocodile = getOrCreateCrocodile().getId();
     }
 
-    public CrocodileAsserts crocodileAsserts = new CrocodileAsserts();
+    private CrocodileResponse getOrCreateCrocodile() {
+        CrocodileResponse[] arrayOfUserResponse = CrocodilesAPI.getPrivateCrocodileResponse(accessToken);
+        if (arrayOfUserResponse.length > 0){
+            int index = getRandomNumber(0, arrayOfUserResponse.length);
+            //System.out.println("exiting index " + index + " of " + arrayOfUserResponse.length);
+            return arrayOfUserResponse[index];
+        }
+        //System.out.println("new created");
+
+        return CrocodilesAPI.createNewCrocodile(accessToken, commonCrocodileRequest);
+    }
 
     @Test
     public void loginTest() {
@@ -35,7 +47,7 @@ public class CrocodileTests extends TestBase {
     @Test
     @Description("verify crocodile is created")
     public void createCrocodileTest() {
-        CommonCrocodileResponse commonCrocodileResponse = CrocodilesAPI.createNewCrocodile(accessToken, commonCrocodileRequest);
+        CrocodileResponse commonCrocodileResponse = CrocodilesAPI.createNewCrocodile(accessToken, commonCrocodileRequest);
         crocodileAsserts.assertCreateNewCrocodile(commonCrocodileResponse, commonCrocodileRequest);
 
     }
@@ -43,7 +55,7 @@ public class CrocodileTests extends TestBase {
     @Test
     @Description("list of public crocodiles")
     public void getListOfPublicCrocodiles() {
-        GetPublicCrocodileResponse[] getPublicCrocodileResponse = CrocodilesAPI.getPublicCrocodileResponse();
+        CrocodileResponse[] getPublicCrocodileResponse = CrocodilesAPI.getPublicCrocodileResponse();
         crocodileAsserts.assertListOfPublicCrocodiles(getPublicCrocodileResponse);
     }
 
@@ -52,49 +64,45 @@ public class CrocodileTests extends TestBase {
     public void getOnePublicCrocodile() {
         int r = getRandomNumber(1, 8);
         String id = Integer.toString(r);
-        GetOnePublicCrocodileResponse getOnePublicCrocodileResponse = CrocodilesAPI.getOnePublicCrocodileResponse(id);
+        CrocodileResponse getOnePublicCrocodileResponse = CrocodilesAPI.getOnePublicCrocodileResponse(id);
         crocodileAsserts.assertOnePublicCrocodile(getOnePublicCrocodileResponse);
     }
 
     @Test
     @Description("list of my private crocodiles")
     public void getListOfPrivateCrocodiles() {
-        GetPrivateCrocodileResponse[] getPrivateCrocodileResponse = CrocodilesAPI.getPrivateCrocodileResponse(accessToken);
+        CrocodileResponse[] getPrivateCrocodileResponse = CrocodilesAPI.getPrivateCrocodileResponse(accessToken);
         crocodileAsserts.assertListOfPrivateCrocodiles(getPrivateCrocodileResponse);
     }
 
     @Test
     @Description("one of my crocodiles")
     public void getOneOfMyCrocodiles() {
-        CommonCrocodileResponse getOneOfMyCrocodilesResponse = CrocodilesAPI.getOneOfMyCrocodilesResponse(String.valueOf(idOfCreatedCrocodile), accessToken);
+        CrocodileResponse getOneOfMyCrocodilesResponse = CrocodilesAPI.getOneOfMyCrocodilesResponse(String.valueOf(idOfCreatedCrocodile), accessToken);
         crocodileAsserts.assertOneOfMyCrocodiles(getOneOfMyCrocodilesResponse);
     }
 
     @Test
     @Description("update one of my crocodiles")
     public void updateCrocodile() {
-
         UpdateCrocodileRequest updateCrocodileRequest = new UpdateCrocodileRequest(idOfCreatedCrocodile, Faker.instance().gameOfThrones().character(), ValueChoosers.getRandomSex(), DF.format(Faker.instance().date().birthday()), 16);
-        UpdateCrocodileResponse updateCrocodileResponse = CrocodilesAPI.updateNewCrocodileResponse(String.valueOf(idOfCreatedCrocodile), accessToken, updateCrocodileRequest);
+        CrocodileResponse updateCrocodileResponse = CrocodilesAPI.updateNewCrocodileResponse(String.valueOf(idOfCreatedCrocodile), accessToken, updateCrocodileRequest);
         crocodileAsserts.assertUpdateMyCrocodile(updateCrocodileResponse, updateCrocodileRequest);
     }
 
     @Test
     @Description("patch one of my crocodiles")
     public void patchCrocodile() {
-
         PatchCrocodileRequest patchCrocodileRequest = new PatchCrocodileRequest(idOfCreatedCrocodile, Faker.instance().gameOfThrones().character(),null,null,null);
-        PatchCrocodileResponse patchCrocodileResponse = CrocodilesAPI.patchMyCrocodile(String.valueOf(idOfCreatedCrocodile), accessToken, patchCrocodileRequest);
+        CrocodileResponse patchCrocodileResponse = CrocodilesAPI.patchMyCrocodile(String.valueOf(idOfCreatedCrocodile), accessToken, patchCrocodileRequest);
         crocodileAsserts.assertPatchMyCrocodile(patchCrocodileResponse, patchCrocodileRequest);
     }
 
     @Test
     @Description("delete one of my crocodiles")
     public void deleteOneOfMyCrocodiles() {
-
-        DeleteCrocodileResponse deleteCrocodileResponse = CrocodilesAPI.deleteCrocodileResponse(String.valueOf(idOfCreatedCrocodile), accessToken);
-        //Assert.assertFalse(ReqresAssert.isUserExist(idOfCreatedUser), "User is not deleted");
-        crocodileAsserts.assertDeletedCrocodile(deleteCrocodileResponse);
+        CrocodilesAPI.deleteCrocodileResponse(String.valueOf(idOfCreatedCrocodile), accessToken);
+        Assert.assertFalse(CrocodileAsserts.isUserExist(idOfCreatedCrocodile, accessToken), "User is not deleted");
     }
 
 }
