@@ -1,0 +1,44 @@
+git init
+git remote add qa-reskill-repo https://github.com/Vesnamc/qa-reskill-repo.git
+git add VesnaMijicCase.txt
+git config --global user.email "vessnamc@gmail.com"
+git commit -m "first commit"
+git branch -M main
+git push -u qa-reskill-repo main
+
+git remote set-url qa-reskill-repo https://github.com/PetkovicStefan/QAReskill.git
+git pull https://github.com/PetkovicStefan/QAReskill.git --allow-unrelated-histories
+git checkout -b branch-vesna-mijic
+git commit -help
+git add VesnaMijicFile1.txt
+git status
+git commit -o VesnaMijicFile1.txt
+
+git push -u qa-reskill-repo branch-vesna-mijic
+
+
+touch .gitignore
+echo 'VesnaMijicFile1 - Copy.txt' >> .gitignore
+git check-ignore *
+
+git status
+git add VesnaMijicFile1.txt
+git commit -m "add text"
+git pull
+(merge from InteliJ)
+git commit -m "resolved merge"
+git branch -u qa-reskill-repo/branch-vesna-mijic
+git push
+
+git fetch qa-reskill-repo master:master
+git merge master
+*add i commit kroz IntelliJ
+git push qa-reskill-repo branch-vesna-mijic:master
+
+git remote add vesna-qa-reskill-repo https://github.com/Vesnamc/qa-reskill-repo.git
+git fetch vesna-qa-reskill-repo main:main
+git checkout main
+touch .gitignore
+*add, commit iz IntelliJ za gitignore i foldere sa zadacima
+git branch -u vesna-qa-reskill-repo/main
+git push
